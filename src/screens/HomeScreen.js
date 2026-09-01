@@ -1,75 +1,94 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
-import CustomButton from '../components/CustomButton';
+
+import { activityIndicator
+image,
+keyboardadvoidingview
+modal
+plataform
+presaable
+scrollview
+text, 
+switch
+textInput
+ } from 'react-native';
+import { useState } from 'react';
 
 export default function HomeScreen({ navigation }) {
-  const irADestinos = () => {
-    navigation.navigate('Destinos');
+
+  const [nombre, setNombre] = useState('');
+  const [destino, setDestino] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [guia, setGuia] = useState(false);
+  const [resultado, setResultado] = useState('');
+  const [procesando, setProcesando] = useState(false);
+
+  const realizarReserva = () => {
+
+    if (nombre.trim() === '' || destino.trim() === '' || cantidad.trim() === '') {
+      setResultado('Debes completar todos los campos');
+      return;
+    }
+
+    setProcesando(true);
+
+    setTimeout(() => {
+      setProcesando(false);
+      setResultado(
+        `Cliente: ${nombre}\nDestino: ${destino}\nPersonas: ${cantidad}\nGuía: ${guia ? 'Sí' : 'No'}`
+      );
+    }, 1000);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: '#06101c', padding: 25 }}>
 
-      <View style={styles.imageContainer}>
-        <Image
-          source={require('../../assets/images/turismo.jpg')}
-          style={styles.image}
-        />
-      </View>
-
-      <Text style={styles.title}>
-        -- Descubre Nariño --
+      <Text style={{ color: '#89c9ee', fontSize: 30, fontWeight: 'bold' }}>
+        Descubre Nariño
       </Text>
 
-      <Text style={styles.subtitle}>
-        Explora paisajes, cultura y lugares increíbles
-        de nuestra región.
-      </Text>
-
-      <CustomButton
-        title="EXPLORAR DESTINOS"
-        onPress={irADestinos}
+      <TextInput
+        placeholder="Nombre"
+        value={nombre}
+        onChangeText={setNombre}
       />
+
+      <TextInput
+        placeholder="Destino"
+        value={destino}
+        onChangeText={setDestino}
+      />
+
+      <TextInput
+        placeholder="Personas"
+        value={cantidad}
+        onChangeText={setCantidad}
+        keyboardType="numeric"
+      />
+
+      <Text style={{ color: 'white' }}>¿Deseas guía?</Text>
+
+      <Switch
+        value={guia}
+        onValueChange={setGuia}
+      />
+
+      <Pressable onPress={realizarReserva}>
+        <Text style={{ color: '#89c9ee' }}>
+          REALIZAR RESERVA
+        </Text>
+      </Pressable>
+
+      {procesando && <ActivityIndicator />}
+
+      <Text style={{ color: 'white' }}>
+        {resultado}
+      </Text>
+
+      <Pressable onPress={() => navigation.navigate('Destinos')}>
+        <Text style={{ color: '#89c9ee' }}>
+          EXPLORAR DESTINOS
+        </Text>
+      </Pressable>
 
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#06101c',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 25,
-  },
-
-  imageContainer: {
-    width: '100%',
-    height: 280,
-    borderRadius: 25,
-    overflow: 'hidden',
-    marginBottom: 25,
-  },
-
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#89c9ee',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-
-  subtitle: {
-    fontSize: 17,
-    color: '#ffffff',
-    textAlign: 'center',
-    lineHeight: 24,
-    marginBottom: 5,
-  },
-});
