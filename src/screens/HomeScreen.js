@@ -1,8 +1,13 @@
 import {
   ActivityIndicator,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
   Pressable,
-  Switch,
+  ScrollView,
   Text,
+  Switch,
   TextInput,
   View
 } from 'react-native';
