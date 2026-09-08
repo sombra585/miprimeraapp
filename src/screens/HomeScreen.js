@@ -18,18 +18,18 @@ export default function HomeScreen() {
 
   // Estados
   const [nombre, setNombre] = useState('');
-  const [cafe, setCafe] = useState('');
-  const [cantidad, setCantidad] = useState('');
-  const [paraLlevar, setLlevar] = useState(false);
+  const [destino, setDestino] = useState('');
+  const [personas, setPersonas] = useState('');
+  const [guia, setGuia] = useState(false);
   const [resultado, setResultado] = useState('');
   const [proceso, setProceso] = useState(false);
 
-  const realizarPedidos = () => {
+  const realizarReserva = () => {
 
     if (
       nombre.trim() === '' ||
-      cafe.trim() === '' ||
-      cantidad.trim() === ''
+      destino.trim() === '' ||
+      personas.trim() === ''
     ) {
       setResultado('Debes completar todos los campos');
       return;
@@ -42,10 +42,10 @@ export default function HomeScreen() {
       setProceso(false);
 
       setResultado(
-        `Cliente: ${nombre}
-Café: ${cafe}
-Cantidad: ${cantidad}
-Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
+        `Turista: ${nombre}
+Destino: ${destino}
+Personas: ${personas}
+Guía turístico: ${guia ? 'Sí' : 'No'}`
       );
 
     }, 1000);
@@ -55,7 +55,7 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
     <View
       style={{
         flex: 1,
-        backgroundColor: '#F5E6D3',
+        backgroundColor: '#E3F2FD',
         padding: 25,
         justifyContent: 'center'
       }}
@@ -65,16 +65,28 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
         style={{
           fontSize: 30,
           fontWeight: 'bold',
-          color: '#5C3A21',
+          color: '#1565C0',
           textAlign: 'center',
-          marginBottom: 25
+          marginBottom: 20
         }}
       >
-        ☕ Mi Cafetería
+        🌎 Turismo Colombia
       </Text>
 
+      {/* ESPACIO PARA LA IMAGEN */}
+      <Image
+        source={require('../../assets/images/turismo.jpg')}
+        style={{
+          width: '100%',
+          height: 180,
+          borderRadius: 15,
+          marginBottom: 20
+        }}
+        resizeMode="cover"
+      />
+
       <TextInput
-        placeholder="Nombre del cliente"
+        placeholder="Nombre del turista"
         value={nombre}
         onChangeText={setNombre}
         style={{
@@ -83,28 +95,28 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
           marginBottom: 12,
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: '#D2B48C'
+          borderColor: '#90CAF9'
         }}
       />
 
       <TextInput
-        placeholder="Tipo de café"
-        value={cafe}
-        onChangeText={setCafe}
+        placeholder="Destino turístico"
+        value={destino}
+        onChangeText={setDestino}
         style={{
           backgroundColor: 'white',
           padding: 13,
           marginBottom: 12,
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: '#D2B48C'
+          borderColor: '#90CAF9'
         }}
       />
 
       <TextInput
-        placeholder="Cantidad"
-        value={cantidad}
-        onChangeText={setCantidad}
+        placeholder="Cantidad de personas"
+        value={personas}
+        onChangeText={setPersonas}
         keyboardType="numeric"
         style={{
           backgroundColor: 'white',
@@ -112,7 +124,7 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
           marginBottom: 15,
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: '#D2B48C'
+          borderColor: '#90CAF9'
         }}
       />
 
@@ -128,23 +140,23 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
         <Text
           style={{
             fontSize: 16,
-            color: '#5C3A21'
+            color: '#1565C0'
           }}
         >
-          ¿Para llevar?
+          ¿Desea guía turístico?
         </Text>
 
         <Switch
-          value={paraLlevar}
-          onValueChange={setLlevar}
+          value={guia}
+          onValueChange={setGuia}
         />
 
       </View>
 
       <Pressable
-        onPress={realizarPedidos}
+        onPress={realizarReserva}
         style={{
-          backgroundColor: '#6F4E37',
+          backgroundColor: '#1976D2',
           padding: 15,
           borderRadius: 10,
           alignItems: 'center'
@@ -158,7 +170,7 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
             fontWeight: 'bold'
           }}
         >
-          REALIZAR PEDIDO
+          REALIZAR RESERVA
         </Text>
 
       </Pressable>
@@ -166,14 +178,14 @@ Para llevar: ${paraLlevar ? 'Sí' : 'No'}`
       {proceso && (
         <ActivityIndicator
           size="large"
-          color="#6F4E37"
+          color="#1976D2"
           style={{ marginTop: 20 }}
         />
       )}
 
       <Text
         style={{
-          color: '#5C3A21',
+          color: '#1565C0',
           fontSize: 16,
           marginTop: 20,
           backgroundColor: 'white',
